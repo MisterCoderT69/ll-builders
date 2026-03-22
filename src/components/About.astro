@@ -1,0 +1,108 @@
+---
+---
+
+<section
+  id="about"
+  class="relative py-24 md:py-36 bg-brand-red overflow-hidden"
+  aria-labelledby="about-heading"
+>
+  <!-- Background texture -->
+  <div class="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_80%_50%,_#b97837_0%,_transparent_60%)]" />
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-16 items-center">
+
+    <!-- Text block -->
+    <div>
+      <p id="about-label" class="opacity-0 font-nav font-light text-brand-gold text-sm tracking-[0.3em] uppercase mb-4">
+        Our Story
+      </p>
+
+      <div class="overflow-hidden mb-8">
+        <h2
+          id="about-heading"
+          class="font-heading font-black text-5xl md:text-6xl lg:text-7xl text-white leading-none"
+          style="clip-path: inset(0 100% 0 0);"
+        >
+          30 Years of<br />
+          <span class="text-brand-gold">Building Dreams</span><br />
+          Across East Texas
+        </h2>
+      </div>
+
+      <p id="about-p1" class="opacity-0 font-accent text-lg md:text-xl text-white/80 leading-relaxed mb-6">
+        L&amp;L Builders, Inc. was founded on a single promise: that every client deserves a home as unique as their
+        vision. A family-owned business rooted in Sulphur Springs, Texas, we have spent over three decades crafting
+        custom luxury homes, breathtaking lake cabins, and commercial structures that define their communities.
+      </p>
+
+      <p id="about-p2" class="opacity-0 font-accent text-lg md:text-xl text-white/80 leading-relaxed mb-10">
+        From the first blueprint to the final walk-through, you work directly with our principals — not a project
+        manager you've never met. That personal commitment, combined with our relationships with East Texas's finest
+        craftspeople and suppliers, is why our clients recommend us to their children.
+      </p>
+
+      <blockquote
+        id="about-quote"
+        class="opacity-0 gold-border-left font-accent italic text-xl md:text-2xl text-brand-gold-light leading-relaxed"
+      >
+        "We don't just build structures. We build the places where your life happens."
+      </blockquote>
+    </div>
+
+    <!-- Image -->
+    <div class="relative">
+      <div class="absolute -inset-4 border border-brand-gold/20 rounded-sm" />
+      <img
+        id="about-image"
+        src="/images/photo_team1.JPG"
+        alt="L&L Builders team on a job site in East Texas"
+        width="600"
+        height="750"
+        loading="lazy"
+        class="opacity-0 w-full h-[500px] md:h-[700px] object-cover object-top grayscale-[20%]"
+      />
+      <!-- Gold accent corner -->
+      <div class="absolute -bottom-4 -right-4 w-24 h-24 border-b-4 border-r-4 border-brand-gold" />
+    </div>
+
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  const section = '#about';
+  const trigger = { trigger: section, start: 'top 75%' };
+
+  gsap.to('#about-label', { opacity: 1, x: 0, duration: 0.7, ease: 'power3.out', scrollTrigger: trigger });
+  gsap.to('#about-heading', {
+    clipPath: 'inset(0 0% 0 0)',
+    duration: 1.4,
+    ease: 'power3.inOut',
+    scrollTrigger: trigger,
+  });
+  gsap.to('#about-p1', { opacity: 1, y: 0, duration: 0.9, delay: 0.3, ease: 'power3.out', scrollTrigger: trigger });
+  gsap.to('#about-p2', { opacity: 1, y: 0, duration: 0.9, delay: 0.5, ease: 'power3.out', scrollTrigger: trigger });
+  gsap.to('#about-quote', { opacity: 1, scale: 1, duration: 1, delay: 0.7, ease: 'power3.out', scrollTrigger: trigger });
+  gsap.to('#about-image', { opacity: 1, x: 0, duration: 1.2, ease: 'power3.out', scrollTrigger: trigger });
+
+  gsap.set('#about-label', { x: -30 });
+  gsap.set('#about-p1', { y: 30 });
+  gsap.set('#about-p2', { y: 30 });
+  gsap.set('#about-quote', { scale: 0.97 });
+  gsap.set('#about-image', { x: 60 });
+
+  // Subtle parallax on image
+  gsap.to('#about-image', {
+    yPercent: -10,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '#about',
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 1.5,
+    },
+  });
+</script>

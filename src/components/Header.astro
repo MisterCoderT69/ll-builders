@@ -1,0 +1,148 @@
+---
+---
+
+<header
+  id="site-header"
+  class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-4 transition-all duration-500"
+>
+  <!-- Logo -->
+  <a href="#hero" id="header-logo" class="flex items-center opacity-0">
+    <img
+      src="/images/new_ll_logo.png"
+      alt="L&L Builders logo"
+      width="100"
+      height="60"
+      class="w-20 md:w-24 object-contain"
+    />
+  </a>
+
+  <!-- Desktop Nav -->
+  <nav class="hidden md:flex items-center gap-10 font-nav font-light text-lg">
+    {['About', 'Services', 'Projects', 'Contact'].map((item) => (
+      <a
+        href={`#${item.toLowerCase()}`}
+        class="nav-desktop-link opacity-0 text-white/90 hover:text-brand-gold transition-colors duration-300 relative group"
+      >
+        {item}
+        <span class="absolute -bottom-1 left-0 w-0 h-px bg-brand-gold transition-all duration-300 group-hover:w-full" />
+      </a>
+    ))}
+  </nav>
+
+  <!-- Hamburger -->
+  <button
+    id="hamburger"
+    aria-label="Open navigation menu"
+    class="relative z-[210] flex flex-col justify-center items-center w-10 h-10 gap-[6px] cursor-pointer"
+  >
+    <span class="ham-bar block w-7 h-[2px] bg-white rounded-full transition-all duration-300" />
+    <span class="ham-bar block w-7 h-[2px] bg-white rounded-full transition-all duration-300" />
+    <span class="ham-bar block w-5 h-[2px] bg-white rounded-full transition-all duration-300 origin-right" />
+  </button>
+</header>
+
+<!-- Full-Screen Overlay Menu -->
+<div id="menu-overlay" class="menu-overlay">
+  <nav class="flex flex-col items-center gap-8 text-center">
+    {['Home', 'About', 'Services', 'Projects', 'Process', 'Contact'].map((item) => (
+      <a
+        href={item === 'Home' ? '#hero' : `#${item.toLowerCase()}`}
+        class="overlay-nav-link opacity-0 font-heading text-5xl md:text-7xl text-white hover:text-brand-gold transition-colors duration-300"
+      >
+        {item}
+      </a>
+    ))}
+    <div class="overlay-contact-info opacity-0 mt-8 font-accent text-xl text-white/60 flex flex-col gap-2">
+      <a href="tel:+19034397666" class="hover:text-brand-gold transition-colors">903-439-7666</a>
+      <a href="mailto:scarpenterenterprises@yahoo.com" class="hover:text-brand-gold transition-colors">
+        scarpenterenterprises@yahoo.com
+      </a>
+    </div>
+  </nav>
+</div>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  const header  = document.getElementById('site-header')!;
+  const hamburger = document.getElementById('hamburger')!;
+  const overlay = document.getElementById('menu-overlay')!;
+  const bars    = hamburger.querySelectorAll('.ham-bar');
+  const overlayLinks = overlay.querySelectorAll('.overlay-nav-link');
+  const overlayContact = overlay.querySelector('.overlay-contact-info');
+
+  let isOpen = false;
+
+  // ── Header entrance ──────────────────────────────────────────
+  const entryTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+  entryTl
+    .to('#header-logo', { opacity: 1, x: 0, duration: 0.8, delay: 0.3 })
+    .to('.nav-desktop-link', { opacity: 1, y: 0, stagger: 0.1, duration: 0.6 }, '-=0.4');
+
+  // Set initial positions
+  gsap.set('#header-logo', { x: -40 });
+  gsap.set('.nav-desktop-link', { y: -15 });
+
+  // ── Header bg on scroll ──────────────────────────────────────
+  ScrollTrigger.create({
+    start: 'top -60',
+    onEnter: () => {
+      header.classList.add('bg-brand-crimson/95', 'shadow-2xl', 'backdrop-blur-sm');
+    },
+    onLeaveBack: () => {
+      header.classList.remove('bg-brand-crimson/95', 'shadow-2xl', 'backdrop-blur-sm');
+    },
+  });
+
+  // ── Menu open/close ──────────────────────────────────────────
+  function openMenu() {
+    isOpen = true;
+    overlay.classList.add('is-open');
+    hamburger.setAttribute('aria-label', 'Close navigation menu');
+
+    gsap.to(overlay, {
+      clipPath: 'circle(150% at calc(100% - 2.5rem) 2.5rem)',
+      duration: 0.7,
+      ease: 'power3.inOut',
+    });
+    gsap.to(overlayLinks, { opacity: 1, y: 0, stagger: 0.08, duration: 0.5, delay: 0.3, ease: 'power3.out' });
+    gsap.to(overlayContact, { opacity: 1, duration: 0.5, delay: 0.7 });
+
+    // Morph hamburger to X
+    gsap.to(bars[0], { rotate: 45, y: 8, duration: 0.3 });
+    gsap.to(bars[1], { opacity: 0, scaleX: 0, duration: 0.2 });
+    gsap.to(bars[2], { rotate: -45, y: -8, width: '1.75rem', duration: 0.3 });
+  }
+
+  function closeMenu() {
+    isOpen = false;
+    hamburger.setAttribute('aria-label', 'Open navigation menu');
+
+    gsap.to(overlay, {
+      clipPath: 'circle(0% at calc(100% - 2.5rem) 2.5rem)',
+      duration: 0.6,
+      ease: 'power3.inOut',
+      onComplete: () => overlay.classList.remove('is-open'),
+    });
+    gsap.to(overlayLinks, { opacity: 0, y: 20, stagger: 0.04, duration: 0.3 });
+    gsap.to(overlayContact, { opacity: 0, duration: 0.2 });
+
+    // Morph X back to hamburger
+    gsap.to(bars[0], { rotate: 0, y: 0, duration: 0.3 });
+    gsap.to(bars[1], { opacity: 1, scaleX: 1, duration: 0.2 });
+    gsap.to(bars[2], { rotate: 0, y: 0, width: '1.25rem', duration: 0.3 });
+  }
+
+  hamburger.addEventListener('click', () => (isOpen ? closeMenu() : openMenu()));
+
+  // Close on overlay link click
+  overlayLinks.forEach(link => link.addEventListener('click', closeMenu));
+
+  // Close on Escape key
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && isOpen) closeMenu(); });
+
+  // Set initial link positions for animation
+  gsap.set(overlayLinks, { y: 30, opacity: 0 });
+</script>

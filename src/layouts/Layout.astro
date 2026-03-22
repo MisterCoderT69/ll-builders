@@ -1,0 +1,94 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title = 'L&L Builders | Custom Luxury Home Builder — East Texas',
+  description = 'L&L Builders, Inc. — Over 30 years building custom luxury homes, lake cabins, and commercial buildings in Sulphur Springs and East Texas.',
+  ogImage = '/images/img_1.jpg',
+} = Astro.props;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "L&L Builders, Inc.",
+  "description": "Custom luxury home builder, lake cabins, and commercial construction in East Texas.",
+  "url": "https://llandlbuilders.com",
+  "telephone": "+19034397666",
+  "email": "scarpenterenterprises@yahoo.com",
+  "logo": "https://llandlbuilders.com/images/new_ll_logo.png",
+  "image": "https://llandlbuilders.com/images/img_1.jpg",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Sulphur Springs",
+    "addressRegion": "TX",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 33.1387,
+    "longitude": -95.6010
+  },
+  "areaServed": "East Texas",
+  "foundingDate": "1994",
+  "priceRange": "$$$",
+  "sameAs": [
+    "https://wa.me/19034397666"
+  ]
+};
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://llandlbuilders.com" />
+
+  <!-- Font preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    rel="preload"
+    as="style"
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Lato:wght@300;400;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Merriweather:wght@300;400;700&display=swap"
+  />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Lato:wght@300;400;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Merriweather:wght@300;400;700&display=swap"
+  />
+
+  <!-- Favicon -->
+  <link rel="icon" href="/images/new_ll_logo.png" type="image/png" sizes="64x64" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={`https://llandlbuilders.com${ogImage}`} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://llandlbuilders.com" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="L&L Builders" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={`https://llandlbuilders.com${ogImage}`} />
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+  <slot name="head" />
+</head>
+<body class="bg-brand-crimson text-white font-body overflow-x-hidden">
+  <slot />
+</body>
+</html>

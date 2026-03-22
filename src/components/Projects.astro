@@ -1,0 +1,99 @@
+---
+const projects = [
+  { src: '/images/project_img.JPG',  alt: 'Custom luxury home exterior, East Texas',      category: 'Residential', year: '2023' },
+  { src: '/images/project-1.jpeg',   alt: 'Open-plan living room with cathedral ceiling', category: 'Residential', year: '2022' },
+  { src: '/images/project_img3.JPG', alt: 'Master suite with lake views',                 category: 'Residential', year: '2023' },
+  { src: '/images/project_img4.JPG', alt: 'Commercial building, Sulphur Springs TX',      category: 'Commercial',  year: '2021' },
+  { src: '/images/project-2.jpeg',   alt: 'Lake cabin exterior at sunset',                category: 'Lake Cabin',  year: '2022' },
+  { src: '/images/project_img6.JPG', alt: 'Custom kitchen and dining area',               category: 'Residential', year: '2023' },
+  { src: '/images/project_img7.JPG', alt: 'Luxury home entryway and staircase',           category: 'Residential', year: '2022' },
+  { src: '/images/project-3.jpeg',   alt: 'Outdoor living space and covered patio',       category: 'Residential', year: '2021' },
+];
+---
+
+<section
+  id="projects"
+  class="py-24 md:py-36 bg-brand-red overflow-hidden"
+  aria-labelledby="projects-heading"
+>
+  <div class="max-w-7xl mx-auto px-6 md:px-12">
+
+    <!-- Heading -->
+    <div class="mb-12 md:mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+      <div>
+        <p class="projects-label opacity-0 font-nav font-light text-brand-gold text-sm tracking-[0.3em] uppercase mb-4">
+          Our Work
+        </p>
+        <h2
+          id="projects-heading"
+          class="font-heading font-black text-5xl md:text-6xl lg:text-7xl text-white"
+          style="clip-path: inset(0 100% 0 0);"
+        >
+          Projects
+        </h2>
+      </div>
+      <p class="projects-sub opacity-0 font-accent italic text-white/60 text-lg max-w-xs text-right hidden md:block">
+        Every project is a story of a family's vision brought to life.
+      </p>
+    </div>
+
+    <!-- Masonry Grid -->
+    <div class="masonry-grid">
+      {projects.map((project, i) => (
+        <figure class="masonry-item project-card opacity-0 relative group overflow-hidden cursor-zoom-in">
+          <img
+            src={project.src}
+            alt={project.alt}
+            width="600"
+            height={i % 3 === 0 ? 750 : 500}
+            loading="lazy"
+            class="w-full h-auto object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          />
+          <!-- Overlay -->
+          <figcaption class="project-overlay absolute inset-0 bg-brand-crimson/85 opacity-0 flex flex-col items-center justify-center gap-3 transition-opacity duration-300">
+            <span class="font-nav text-brand-gold text-xs tracking-[0.25em] uppercase">{project.category}</span>
+            <p class="font-heading text-white text-lg font-bold text-center px-4">{project.alt}</p>
+            <span class="font-body text-white/50 text-sm">{project.year}</span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  const trigger = { trigger: '#projects', start: 'top 80%' };
+
+  gsap.to('.projects-label', { opacity: 1, x: 0, duration: 0.7, ease: 'power3.out', scrollTrigger: trigger });
+  gsap.to('#projects-heading', { clipPath: 'inset(0 0% 0 0)', duration: 1.3, ease: 'power3.inOut', scrollTrigger: trigger });
+  gsap.to('.projects-sub', { opacity: 1, duration: 0.8, delay: 0.4, scrollTrigger: trigger });
+
+  gsap.set('.projects-label', { x: -30 });
+  gsap.set('.project-card', { y: 50, scale: 0.97 });
+
+  gsap.to('.project-card', {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    duration: 0.8,
+    stagger: 0.08,
+    ease: 'power3.out',
+    scrollTrigger: { trigger: '#projects', start: 'top 85%' },
+  });
+
+  // Hover overlays
+  document.querySelectorAll<HTMLElement>('.project-card').forEach(card => {
+    const overlay = card.querySelector<HTMLElement>('.project-overlay');
+    card.addEventListener('mouseenter', () => {
+      gsap.to(overlay, { opacity: 1, duration: 0.35 });
+    });
+    card.addEventListener('mouseleave', () => {
+      gsap.to(overlay, { opacity: 0, duration: 0.35 });
+    });
+  });
+</script>

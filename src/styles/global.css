@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Lato:wght@300;400;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Merriweather:wght@300;400;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-brand-red:       #7F1725;
+  --color-brand-crimson:   #4c0000;
+  --color-brand-light:     #AE2637;
+  --color-brand-gold:      #b97837;
+  --color-brand-gold-light:#d4a05a;
+
+  --font-heading: "Playfair Display", Georgia, serif;
+  --font-body:    "Lato", Helvetica, sans-serif;
+  --font-accent:  "Cormorant Garamond", Georgia, serif;
+  --font-nav:     "Merriweather", Georgia, serif;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: var(--color-brand-crimson);
+    color: white;
+    font-family: var(--font-body);
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4 { font-family: var(--font-heading); }
+}
+
+@layer utilities {
+  .font-heading { font-family: var(--font-heading); }
+  .font-body    { font-family: var(--font-body); }
+  .font-accent  { font-family: var(--font-accent); }
+  .font-nav     { font-family: var(--font-nav); }
+
+  .bg-brand-red      { background-color: var(--color-brand-red); }
+  .bg-brand-crimson  { background-color: var(--color-brand-crimson); }
+  .bg-brand-light    { background-color: var(--color-brand-light); }
+  .bg-brand-gold     { background-color: var(--color-brand-gold); }
+  .bg-brand-gold-light { background-color: var(--color-brand-gold-light); }
+
+  .text-brand-red      { color: var(--color-brand-red); }
+  .text-brand-crimson  { color: var(--color-brand-crimson); }
+  .text-brand-light    { color: var(--color-brand-light); }
+  .text-brand-gold     { color: var(--color-brand-gold); }
+  .text-brand-gold-light { color: var(--color-brand-gold-light); }
+
+  .border-brand-gold   { border-color: var(--color-brand-gold); }
+  .border-brand-crimson { border-color: var(--color-brand-crimson); }
+
+  .gold-underline {
+    border-bottom: 3px solid var(--color-brand-gold);
+    padding-bottom: 0.25rem;
+  }
+
+  .gold-border-left {
+    border-left: 4px solid var(--color-brand-gold);
+    padding-left: 1rem;
+  }
+
+  /* Full-screen overlay nav */
+  .menu-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: var(--color-brand-crimson);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    clip-path: circle(0% at calc(100% - 2.5rem) 2.5rem);
+  }
+
+  .menu-overlay.is-open {
+    pointer-events: all;
+  }
+
+  /* CSS Masonry */
+  .masonry-grid {
+    columns: 3 280px;
+    column-gap: 1rem;
+  }
+
+  .masonry-item {
+    break-inside: avoid;
+    margin-bottom: 1rem;
+  }
+
+  /* Process connector line */
+  .process-line {
+    height: 2px;
+    background: var(--color-brand-gold);
+    transform-origin: left center;
+    transform: scaleX(0);
+  }
+}

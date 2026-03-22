@@ -1,0 +1,128 @@
+---
+const testimonials = [
+  {
+    quote: "We worked with L&L to build our forever home on Lake Fork. From day one they treated our budget and timeline like their own. We moved in three weeks early. I've never recommended anyone as confidently as I recommend L&L Builders.",
+    name: 'David & Carla M.',
+    location: 'Sulphur Springs, TX',
+  },
+  {
+    quote: "After getting burned by another contractor, a friend referred me to L&L for our commercial building. Night and day difference. Constant communication, no surprise charges, and craftsmanship that made our whole team proud.",
+    name: 'James T.',
+    location: 'Commerce, TX',
+  },
+  {
+    quote: "Our lake cabin is everything we dreamed. We gave them an inspiration folder and they came back with a design that was even better than what we imagined. Three years later, we still get compliments every single weekend.",
+    name: 'Susan & Bill R.',
+    location: 'Greenville, TX',
+  },
+];
+---
+
+<section
+  id="testimonials"
+  class="py-24 md:py-36 bg-brand-crimson overflow-hidden"
+  aria-labelledby="testimonials-heading"
+>
+  <div class="max-w-7xl mx-auto px-6 md:px-12">
+
+    <!-- Heading -->
+    <div class="mb-16 text-center">
+      <p class="testimonials-label opacity-0 font-nav font-light text-brand-gold text-sm tracking-[0.3em] uppercase mb-4">
+        Client Stories
+      </p>
+      <h2
+        id="testimonials-heading"
+        class="font-heading font-black text-5xl md:text-6xl text-white"
+        style="clip-path: inset(0 100% 0 0);"
+      >
+        What Our Clients Say
+      </h2>
+    </div>
+
+    <!-- Carousel track -->
+    <div class="relative overflow-hidden">
+      <div id="testimonial-track" class="flex gap-8 transition-none">
+        {testimonials.map((t, i) => (
+          <article
+            class="testimonial-card opacity-0 flex-shrink-0 w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.4rem)] bg-brand-red/60 border border-white/10 p-10 relative"
+          >
+            <!-- Giant quote mark -->
+            <span class="absolute top-4 right-8 font-heading text-8xl text-brand-gold/15 leading-none select-none" aria-hidden="true">"</span>
+
+            <blockquote class="font-accent italic text-lg md:text-xl text-white/85 leading-relaxed mb-8">
+              "{t.quote}"
+            </blockquote>
+
+            <footer>
+              <div class="w-8 h-px bg-brand-gold mb-4" />
+              <cite class="not-italic">
+                <p class="font-heading font-bold text-white text-base">{t.name}</p>
+                <p class="font-nav font-light text-brand-gold/70 text-xs tracking-[0.15em] uppercase mt-1">
+                  {t.location}
+                </p>
+              </cite>
+            </footer>
+          </article>
+        ))}
+      </div>
+    </div>
+
+    <!-- Dots -->
+    <div class="flex justify-center gap-3 mt-10">
+      {testimonials.map((_, i) => (
+        <button
+          class="testimonial-dot w-2 h-2 rounded-full bg-white/25 transition-all duration-300"
+          data-index={i}
+          aria-label={`Go to testimonial ${i + 1}`}
+        />
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  const trigger = { trigger: '#testimonials', start: 'top 80%' };
+
+  gsap.to('.testimonials-label', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', scrollTrigger: trigger });
+  gsap.to('#testimonials-heading', { clipPath: 'inset(0 0% 0 0)', duration: 1.2, ease: 'power3.inOut', scrollTrigger: trigger });
+
+  gsap.set('.testimonials-label', { y: 20 });
+  gsap.set('.testimonial-card', { y: 50 });
+
+  gsap.to('.testimonial-card', {
+    opacity: 1,
+    y: 0,
+    stagger: 0.15,
+    duration: 0.8,
+    ease: 'power3.out',
+    scrollTrigger: trigger,
+  });
+
+  // Dot navigation
+  const dots = document.querySelectorAll<HTMLElement>('.testimonial-dot');
+  let current = 0;
+
+  function setActiveDot(index: number) {
+    dots.forEach((dot, i) => {
+      gsap.to(dot, {
+        backgroundColor: i === index ? '#b97837' : 'rgba(255,255,255,0.25)',
+        scale: i === index ? 1.4 : 1,
+        duration: 0.3,
+      });
+    });
+  }
+
+  setActiveDot(0);
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      current = i;
+      setActiveDot(i);
+    });
+  });
+</script>

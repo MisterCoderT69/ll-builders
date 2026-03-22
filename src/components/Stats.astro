@@ -1,0 +1,85 @@
+---
+const stats = [
+  { value: 30, suffix: '+', label: 'Years of Experience' },
+  { value: 200, suffix: '+', label: 'Homes & Structures Built' },
+  { value: 4, suffix: '', label: 'Counties Served in East Texas' },
+  { value: 100, suffix: '%', label: 'Family-Owned & Operated' },
+];
+---
+
+<section
+  id="stats"
+  class="py-20 md:py-28 bg-brand-crimson border-y border-brand-gold/20"
+  aria-label="Company statistics"
+>
+  <div class="max-w-7xl mx-auto px-6 md:px-12">
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
+      {stats.map((stat, i) => (
+        <div class="stat-card opacity-0 text-center px-4 py-8 relative group">
+          <!-- Vertical divider except last -->
+          {i < stats.length - 1 && (
+            <div class="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 h-16 w-px bg-brand-gold/20" />
+          )}
+
+          <div class="flex items-end justify-center gap-1 mb-3">
+            <span
+              class="stat-number font-heading font-black text-5xl md:text-6xl text-brand-gold"
+              data-target={stat.value}
+            >
+              0
+            </span>
+            <span class="font-heading font-black text-4xl md:text-5xl text-brand-gold mb-1">
+              {stat.suffix}
+            </span>
+          </div>
+
+          <p class="stat-label opacity-0 font-nav font-light text-white/60 text-sm tracking-[0.15em] uppercase">
+            {stat.label}
+          </p>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  const trigger = { trigger: '#stats', start: 'top 80%' };
+
+  // Cards entrance
+  gsap.to('.stat-card', {
+    opacity: 1,
+    y: 0,
+    duration: 0.8,
+    stagger: 0.15,
+    ease: 'power3.out',
+    scrollTrigger: trigger,
+  });
+  gsap.set('.stat-card', { y: 40 });
+
+  // Labels
+  gsap.to('.stat-label', {
+    opacity: 1,
+    duration: 0.5,
+    stagger: 0.15,
+    delay: 0.4,
+    scrollTrigger: trigger,
+  });
+
+  // Counter animation
+  document.querySelectorAll<HTMLElement>('.stat-number').forEach((el) => {
+    const target = parseInt(el.getAttribute('data-target') || '0', 10);
+    gsap.to(el, {
+      innerHTML: target,
+      duration: 2,
+      ease: 'power1.out',
+      snap: { innerHTML: 1 },
+      scrollTrigger: trigger,
+    });
+  });
+</script>
