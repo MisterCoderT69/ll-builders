@@ -4,7 +4,8 @@ import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://llandlbuilders.com',
+  site: 'https://MisterCoderT69.github.io',
+  base: '/ll-builders',
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],
