@@ -1,3 +1,7 @@
 User-agent: *
 Allow: /
-Sitemap: https://llandlbuilders.com/sitemap-index.xml
+
+# Block internal build artifacts
+Disallow: /_astro/
+
+Sitemap: https://landlbuildersinc.com/sitemap-index.xml

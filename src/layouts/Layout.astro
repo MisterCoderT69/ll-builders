@@ -6,25 +6,41 @@ export interface Props {
 }
 
 const {
-  title = 'L&L Builders | Custom Luxury Home Builder — East Texas',
-  description = 'L&L Builders, Inc. — Over 30 years building custom luxury homes, lake cabins, and commercial buildings in Sulphur Springs and East Texas.',
+  title = 'L&L Builders | Custom Luxury Home Builder in East Texas | Sulphur Springs, TX',
+  description = 'L&L Builders, Inc. — East Texas\'s premier custom luxury home builder for 30+ years. Serving Sulphur Springs, Commerce, Greenville & surrounding areas. Custom homes, lake cabins, and commercial construction. Call 903-439-7666.',
   ogImage = '/images/img_1.jpg',
 } = Astro.props;
 
-const schema = {
+const siteUrl = 'https://landlbuildersinc.com';
+
+// Primary LocalBusiness schema
+const localBusinessSchema = {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
+  "@type": ["LocalBusiness", "HomeAndConstructionBusiness", "GeneralContractor"],
+  "@id": `${siteUrl}/#business`,
   "name": "L&L Builders, Inc.",
-  "description": "Custom luxury home builder, lake cabins, and commercial construction in East Texas.",
-  "url": "https://llandlbuilders.com",
+  "alternateName": "L and L Builders",
+  "description": "Family-owned custom luxury home builder, lake cabin builder, and commercial contractor serving East Texas for over 30 years.",
+  "url": siteUrl,
   "telephone": "+19034397666",
   "email": "scarpenterenterprises@yahoo.com",
-  "logo": "https://llandlbuilders.com/images/new_ll_logo.png",
-  "image": "https://llandlbuilders.com/images/img_1.jpg",
+  "logo": {
+    "@type": "ImageObject",
+    "url": `${siteUrl}/images/new_ll_logo.png`,
+    "width": 200,
+    "height": 120
+  },
+  "image": [
+    `${siteUrl}/images/img_1.jpg`,
+    `${siteUrl}/images/project_img.JPG`,
+    `${siteUrl}/images/project-1.jpeg`
+  ],
   "address": {
     "@type": "PostalAddress",
+    "streetAddress": "",
     "addressLocality": "Sulphur Springs",
     "addressRegion": "TX",
+    "postalCode": "75482",
     "addressCountry": "US"
   },
   "geo": {
@@ -32,11 +48,157 @@ const schema = {
     "latitude": 33.1387,
     "longitude": -95.6010
   },
-  "areaServed": "East Texas",
+  "areaServed": [
+    { "@type": "City", "name": "Sulphur Springs", "sameAs": "https://en.wikipedia.org/wiki/Sulphur_Springs,_Texas" },
+    { "@type": "City", "name": "Commerce" },
+    { "@type": "City", "name": "Greenville" },
+    { "@type": "City", "name": "Mount Pleasant" },
+    { "@type": "AdministrativeArea", "name": "East Texas" }
+  ],
+  "serviceArea": {
+    "@type": "GeoCircle",
+    "geoMidpoint": {
+      "@type": "GeoCoordinates",
+      "latitude": 33.1387,
+      "longitude": -95.6010
+    },
+    "geoRadius": "100000"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Construction Services",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Custom Luxury Home Building",
+          "description": "Fully custom luxury home construction tailored to your vision and lifestyle in East Texas."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Lake Cabin Construction",
+          "description": "Luxurious lake cabin and retreat construction on East Texas lakes including Lake Fork."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Commercial Construction",
+          "description": "Office buildings, retail spaces, and commercial structures built to last."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Home Renovation & Remodeling",
+          "description": "Kitchen, bathroom, and full-home renovations at new-construction quality."
+        }
+      }
+    ]
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "reviewCount": "3",
+    "bestRating": "5",
+    "worstRating": "1"
+  },
+  "review": [
+    {
+      "@type": "Review",
+      "author": { "@type": "Person", "name": "David & Carla M." },
+      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+      "reviewBody": "We worked with L&L to build our forever home on Lake Fork. We moved in three weeks early. I've never recommended anyone as confidently as I recommend L&L Builders.",
+      "datePublished": "2023-08-01"
+    },
+    {
+      "@type": "Review",
+      "author": { "@type": "Person", "name": "James T." },
+      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+      "reviewBody": "Constant communication, no surprise charges, and craftsmanship that made our whole team proud.",
+      "datePublished": "2022-11-15"
+    },
+    {
+      "@type": "Review",
+      "author": { "@type": "Person", "name": "Susan & Bill R." },
+      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+      "reviewBody": "Our lake cabin is everything we dreamed. Three years later, we still get compliments every single weekend.",
+      "datePublished": "2021-06-20"
+    }
+  ],
   "foundingDate": "1994",
+  "numberOfEmployees": { "@type": "QuantitativeValue", "value": "10" },
   "priceRange": "$$$",
+  "paymentAccepted": "Check, Bank Transfer",
+  "currenciesAccepted": "USD",
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "08:00",
+      "closes": "17:00"
+    }
+  ],
   "sameAs": [
     "https://wa.me/19034397666"
+  ],
+  "keywords": "custom home builder East Texas, luxury home builder Sulphur Springs TX, lake cabin builder Texas, custom builder Hopkins County, East Texas general contractor"
+};
+
+// WebSite schema for sitelinks searchbox
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${siteUrl}/#website`,
+  "url": siteUrl,
+  "name": "L&L Builders",
+  "description": "Custom luxury home builder in East Texas",
+  "publisher": { "@id": `${siteUrl}/#business` }
+};
+
+// FAQ schema
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Where does L&L Builders build homes?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "L&L Builders serves all of East Texas, including Sulphur Springs, Commerce, Greenville, Mount Pleasant, and surrounding counties in Hopkins, Hunt, Wood, and Titus counties."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long has L&L Builders been in business?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "L&L Builders, Inc. has been building custom homes and commercial structures in East Texas for over 30 years, since 1994."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does L&L Builders build lake cabins?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. L&L Builders specializes in luxurious lake cabins on East Texas lakes including Lake Fork, Lake Bob Sandlin, and others in the region."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I get a quote for a custom home in East Texas?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Contact L&L Builders at 903-439-7666 or fill out the contact form at landlbuildersinc.com. You can also reach us via WhatsApp or text at the same number."
+      }
+    }
   ]
 };
 ---
@@ -47,44 +209,57 @@ const schema = {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <!-- Primary SEO -->
   <title>{title}</title>
   <meta name="description" content={description} />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://llandlbuilders.com" />
+  <meta name="keywords" content="custom home builder East Texas, luxury home builder Sulphur Springs TX, lake cabin builder Texas, custom builder Hopkins County, East Texas general contractor, home builder near me Texas, new home construction East Texas, commercial builder Sulphur Springs" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="L&L Builders, Inc." />
+  <link rel="canonical" href={siteUrl} />
 
-  <!-- Font preconnect for performance -->
+  <!-- Geo / Local SEO -->
+  <meta name="geo.region" content="US-TX" />
+  <meta name="geo.placename" content="Sulphur Springs, Texas" />
+  <meta name="geo.position" content="33.1387;-95.6010" />
+  <meta name="ICBM" content="33.1387, -95.6010" />
+
+  <!-- Font preconnect -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    rel="preload"
-    as="style"
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Lato:wght@300;400;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Merriweather:wght@300;400;700&display=swap"
-  />
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Lato:wght@300;400;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Merriweather:wght@300;400;700&display=swap"
-  />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Lato:wght@300;400;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Merriweather:wght@300;400;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Lato:wght@300;400;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Merriweather:wght@300;400;700&display=swap" />
+
+  <!-- Preload hero image for LCP -->
+  <link rel="preload" as="image" href="/images/img_1.jpg" fetchpriority="high" />
 
   <!-- Favicon -->
   <link rel="icon" href="/images/new_ll_logo.png" type="image/png" sizes="64x64" />
+  <link rel="apple-touch-icon" href="/images/new_ll_logo.png" />
 
   <!-- Open Graph -->
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
-  <meta property="og:image" content={`https://llandlbuilders.com${ogImage}`} />
+  <meta property="og:image" content={`${siteUrl}${ogImage}`} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="L&L Builders — Custom luxury home builder in East Texas" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://llandlbuilders.com" />
+  <meta property="og:url" content={siteUrl} />
   <meta property="og:locale" content="en_US" />
-  <meta property="og:site_name" content="L&L Builders" />
+  <meta property="og:site_name" content="L&L Builders, Inc." />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
-  <meta name="twitter:image" content={`https://llandlbuilders.com${ogImage}`} />
+  <meta name="twitter:image" content={`${siteUrl}${ogImage}`} />
+  <meta name="twitter:image:alt" content="L&L Builders — Custom luxury home builder in East Texas" />
 
   <!-- Schema.org JSON-LD -->
-  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
   <slot name="head" />
 </head>
